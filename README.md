@@ -66,8 +66,8 @@ Honest status key: **USED** = done in this project · **DOC** = real files writt
 
 | Kiro feature | What it did in this project | Status |
 |---|---|---|
-| **Spec-driven development** | Specs were written before code (design pack, Oct 27) and now live as real files in `.kiro/specs/`: skeleton core, claim flow, rules check, certification/payment, permit flow, timeline. The code follows them module-for-module. | USED |
-| **Steering docs** | Plain-language build rules in `.kiro/steering/`: build the 5 bones in order; rules in one place, public rules only, never invent a benefit rule; plain words; pay once, never twice. | USED |
+| **Spec-driven development** | Specs were written before code (design pack, Oct 27) and now live as real files in `.kiro/specs/`: a skeleton-core spec and a timeline spec, plus full folder specs (requirements / design / tasks) for App 1 and App 2. The code follows them module-for-module, and the task lists mark honestly what is built and what is not yet. | USED |
+| **Steering docs** | Plain-language build rules in `.kiro/steering/` (6 files): build the 5 bones in order; rules in one place; public EDD rules only, never invent a benefit rule; clean-room (no EDD COBOL); plain words; pay once, never twice. | USED |
 | **Agent Hooks** | The flow's pause-and-wait points are written as hook files in `.kiro/hooks/`: form incomplete, identity pending, wages missing, certification due, staff review needed, final check before money moves, App 2 application incomplete. | DOC |
 | **Vibe coding** | No Kiro IDE vibe-coding session has been run yet. The first build (Oct 30, 2026) was written by an agent swarm working from the design pack and these specs. | TO-DO |
 | **MCP** | No MCP server was needed for this build (stdlib-only, public rules already in hand). | NOT USED — not needed |
