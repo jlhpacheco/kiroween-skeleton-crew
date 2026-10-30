@@ -1,0 +1,11 @@
+# Track B — App 1: California unemployment claims modernizer — RESULT
+
+FROM: Track B (App 1) | Kiroween 2026 build, Fri 2026-10-30
+
+- **Hypothesis:** The skeleton sentence (form in → rules check → steps move → money moves → person sees a clear timeline) can carry California unemployment claims using only public rules — CUIC §1280 WBA, standard/alternate base periods, waiting week, biweekly certification, partial-earnings disregard — in stdlib-only Python, with no EDD code of any kind.
+- **Method:** Clean-room build in this folder: `wba.py` (published §1280 step table $900.00–$948.99 → $40 through $1,807.00–$1,832.99 → $70; above $1,832.99, ceil(highest-quarter ÷ 26); $40 floor / $450 cap; monetary qualify ≥$1,300 high quarter OR ≥$900 + total ≥1.25× high quarter), `base_period.py` (standard = first 4 of last 5 completed quarters by claim-month mapping; alternate = 4 most recent), `claim_flow.py` (Filed → WaitingWeek unpaid-but-certified → Certified → Paid; disregard = greater of $25 or 25% of earnings, rest deducted dollar-for-dollar; max 26 weeks / 26×WBA = $11,700 at cap; one payment per week, second attempt blocked), `demo.py` (one claim end-to-end, prints timeline), `tests/test_app1.py` (unittest).
+- **Metric:** 25 tests run, 25 passed, 0 failed (`python3 -m unittest discover -s tests`). Required edges covered: $900 → $40, $948.99 → $40 / $949 → $41, $1,832.99 → $70, $1,833 → $71 (ceil formula), high wages → $450 cap, $899 fails both qualify branches, waiting week pays $0, partial-earnings disregard (both the $25 and the 25% arm), double-pay blocked with no money moved, 26-week cap. Demo runs clean: Nov 2026 claim, highest quarter $5,200 → WBA $200, waiting week $0, week with $200 earnings pays $50, total paid $450.
+- **Verdict:** PASS — App 1 core engine built and proven on public rules only. Honest-facts guard held: SCDB core described only as c.1979 / ~45 years old in 2024 / still running Feb 2026 / EDDNext-ICMS replacement Jun 2029; no named oldest program, no line count, no COBOL version claimed anywhere. No network use in the code, no publishing, no GitHub push, no spend.
+
+Files: `wba.py`, `base_period.py`, `claim_flow.py`, `demo.py`, `tests/test_app1.py`, `RESULT.md` — all in `track-b-app1-edd/`.
+Run it: `python3 demo.py` · Test it: `python3 -m unittest discover -s tests`

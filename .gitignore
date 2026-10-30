@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+
+# NOTE: .kiro is NOT ignored and must never be added here.
+# Kiroween requires the /.kiro directory at the repo root in the public repo.
