@@ -1,0 +1,194 @@
+/* Skeleton Crew — shared stylesheet. No external assets. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #f4f4f0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header.site {
+  background: #17365d;
+  color: #ffffff;
+  padding: 20px 16px;
+}
+header.site .wrap { max-width: 960px; margin: 0 auto; }
+header.site h1 { margin: 0 0 4px; font-size: 28px; }
+header.site p { margin: 0; font-size: 17px; }
+header.site a { color: #ffd966; }
+
+h2 { font-size: 24px; margin: 28px 0 10px; }
+h3 { font-size: 20px; margin: 20px 0 8px; }
+
+a { color: #17365d; }
+
+/* The 5-step strip */
+.steps-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: stretch;
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+}
+.steps-strip li {
+  flex: 1 1 140px;
+  background: #ffffff;
+  border: 3px solid #17365d;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+.steps-strip .num {
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  color: #17365d;
+}
+.steps-strip .step-name { display: block; font-weight: bold; font-size: 19px; }
+.steps-strip .step-note { display: block; font-size: 15px; }
+
+/* Cards */
+.cards { display: flex; flex-wrap: wrap; gap: 16px; }
+.card {
+  flex: 1 1 300px;
+  background: #ffffff;
+  border: 2px solid #17365d;
+  border-radius: 10px;
+  padding: 16px;
+}
+.card h3 { margin-top: 0; }
+
+.big-link, button {
+  display: inline-block;
+  background: #17365d;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 6px 6px 6px 0;
+}
+button:hover, .big-link:hover { background: #24507f; }
+button:focus, a:focus, input:focus, select:focus {
+  outline: 4px solid #ffd966;
+  outline-offset: 2px;
+}
+button.secondary { background: #ffffff; color: #17365d; border: 3px solid #17365d; }
+button:disabled { background: #888888; cursor: not-allowed; }
+
+.note {
+  background: #fff8dc;
+  border: 2px solid #8a6d00;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+/* Forms */
+label {
+  display: block;
+  font-weight: bold;
+  font-size: 19px;
+  margin: 16px 0 4px;
+}
+input, select {
+  font-size: 19px;
+  padding: 10px;
+  width: 100%;
+  max-width: 420px;
+  border: 2px solid #555555;
+  border-radius: 6px;
+  background: #ffffff;
+}
+fieldset {
+  border: 2px solid #17365d;
+  border-radius: 10px;
+  margin: 16px 0;
+  padding: 8px 16px 16px;
+  background: #ffffff;
+}
+legend { font-weight: bold; font-size: 20px; padding: 0 8px; }
+
+/* Results */
+.panel {
+  background: #ffffff;
+  border: 2px solid #17365d;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+}
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td {
+  border: 1px solid #888888;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 18px;
+}
+th { background: #dce6f1; }
+
+.status-approved { font-weight: bold; color: #145c14; }
+.status-denied { font-weight: bold; color: #a10000; }
+
+.message {
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-weight: bold;
+}
+.message-error { background: #fde8e8; border: 2px solid #a10000; color: #a10000; }
+.message-ok { background: #e6f4e6; border: 2px solid #145c14; color: #145c14; }
+.message[hidden] { display: none; }
+
+/* Week rows (App 1) */
+.week-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #888888;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  background: #ffffff;
+}
+.week-row .week-label { font-weight: bold; min-width: 90px; }
+.week-row input { width: 160px; }
+.week-row .paid-tag { font-weight: bold; color: #145c14; }
+
+/* Timeline */
+ol.timeline { padding-left: 28px; }
+ol.timeline li { margin: 6px 0; }
+
+/* Steps path (App 2) */
+.path { font-size: 20px; font-weight: bold; }
+.path .arrow { color: #17365d; }
+
+footer.site {
+  margin-top: 32px;
+  padding: 16px;
+  background: #e8e8e2;
+  font-size: 16px;
+}
+footer.site .wrap { max-width: 960px; margin: 0 auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 17px; }
+  header.site h1 { font-size: 24px; }
+  .big-link, button { width: 100%; text-align: center; }
+  .week-row input { width: 100%; }
+}

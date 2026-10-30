@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App 1 — Unemployment Claim — Skeleton Crew</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <h1>App 1 — Unemployment Claim</h1>
+    <p><a href="index.html">← Back to the start page</a></p>
+  </div>
+</header>
+
+<main>
+
+  <p>Step 1: fill in the form. Step 2: the rules check the wages.
+     Then certify weeks, one week at a time.</p>
+
+  <div class="note">
+    <p><strong>Demo only. This is not the real EDD.</strong> No real claim is filed. No real money moves.</p>
+  </div>
+
+  <p><button type="button" id="demo-btn">Load the demo case</button></p>
+  <p>Demo case: claim date Nov 2, 2026. Wages $3,200 / $4,100 / $5,200 / $4,800.
+     Then: waiting week, week 1, week 2 (with $200 earnings), week 3.</p>
+
+  <form id="claim-form">
+    <fieldset>
+      <legend>Step 1 — Your form</legend>
+
+      <label for="claimant">Your name</label>
+      <input type="text" id="claimant" value="Demo Claimant">
+
+      <label for="claim-date">Claim date</label>
+      <input type="date" id="claim-date" value="2026-11-02">
+
+      <p>Wages in each base-period quarter. The labels change when you pick a claim date.</p>
+
+      <label for="wage-1">Quarter 1 wages ($)</label>
+      <input type="number" id="wage-1" min="0" step="0.01" value="0">
+
+      <label for="wage-2">Quarter 2 wages ($)</label>
+      <input type="number" id="wage-2" min="0" step="0.01" value="0">
+
+      <label for="wage-3">Quarter 3 wages ($)</label>
+      <input type="number" id="wage-3" min="0" step="0.01" value="0">
+
+      <label for="wage-4">Quarter 4 wages ($)</label>
+      <input type="number" id="wage-4" min="0" step="0.01" value="0">
+
+      <p><button type="submit" id="check-btn">Check my claim</button></p>
+    </fieldset>
+  </form>
+
+  <div class="message message-error" id="check-message" role="alert" hidden></div>
+
+  <section class="panel" id="result-panel" hidden>
+    <h2>Step 2 — Rules check result</h2>
+    <table>
+      <tbody>
+        <tr><th scope="row">Standard base period</th><td id="r-std"></td></tr>
+        <tr><th scope="row">Standard base period dates</th><td id="r-std-dates"></td></tr>
+        <tr><th scope="row">Alternate base period dates</th><td id="r-alt-dates"></td></tr>
+        <tr><th scope="row">Highest quarter</th><td id="r-hq"></td></tr>
+        <tr><th scope="row">Total wages (all 4 quarters)</th><td id="r-total"></td></tr>
+        <tr><th scope="row">Monetarily qualifies?</th><td id="r-qualifies"></td></tr>
+        <tr><th scope="row">Why</th><td id="r-branch"></td></tr>
+        <tr><th scope="row">Weekly benefit amount (WBA)</th><td id="r-wba"></td></tr>
+        <tr><th scope="row">Max in the benefit year (26 × WBA)</th><td id="r-max"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel" id="claim-panel" hidden>
+    <h2>Steps 3–4 — Certify weeks. Money moves once per week.</h2>
+
+    <p><button type="button" id="waiting-btn">Certify waiting week</button></p>
+    <p>The waiting week must be certified first. It pays $0.</p>
+
+    <div class="message message-error" id="claim-message" role="alert" hidden></div>
+    <div class="message message-ok" id="claim-ok" hidden></div>
+
+    <table>
+      <tbody>
+        <tr><th scope="row">Total paid</th><td id="t-paid">$0.00</td></tr>
+        <tr><th scope="row">Balance left</th><td id="t-balance">$0.00</td></tr>
+        <tr><th scope="row">Weeks paid</th><td id="t-weeks">0 of 26</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Payable weeks 1–26</h3>
+    <p>Put in earnings for the week (or leave $0). Then press the week's button.
+       The same week can never be paid twice.</p>
+    <div id="week-rows"></div>
+
+    <h3>Step 5 — Your timeline</h3>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Skeleton Crew — Kiroween 2026. Demo only. Not the real EDD.
+       Rules: CUIC §1280, ported from the Python code in the repo.</p>
+  </div>
+</footer>
+
+<script src="js/rules.js"></script>
+<script src="js/app1.js"></script>
+</body>
+</html>

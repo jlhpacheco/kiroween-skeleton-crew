@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App 2 — Parking Permits — Skeleton Crew</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <h1>App 2 — Parking Permits</h1>
+    <p><a href="index.html">← Back to the start page</a></p>
+  </div>
+</header>
+
+<main>
+
+  <p>Step 1: fill in the form. Step 2: the rules check it.
+     Step 3: the case moves — Applied → Checked → Approved or Denied.</p>
+
+  <div class="note">
+    <p><strong>DEMO rules — not a real city's fees.</strong>
+       These zones and fees are demo rules for this hackathon build.
+       They are not a real city's law, fee schedule, or ordinance.
+       No real payment is taken.</p>
+  </div>
+
+  <p>
+    <button type="button" id="demo-btn">Load the 3 demo cases</button>
+    <button type="button" id="reset-btn" class="secondary">Start over</button>
+  </p>
+  <p>Demo cases: Ana Ruiz (resident, North Lot) → Approved, $30 paid.
+     Ben Cole (visitor, Airport) → Denied.
+     Cy Park (employee, Downtown) → Approved, $0 free.</p>
+
+  <form id="permit-form">
+    <fieldset>
+      <legend>Step 1 — Permit form</legend>
+
+      <label for="driver">Driver name</label>
+      <input type="text" id="driver" autocomplete="name">
+
+      <label for="plate">Plate</label>
+      <input type="text" id="plate" autocomplete="off">
+
+      <label for="address">Address</label>
+      <input type="text" id="address" autocomplete="street-address">
+
+      <label for="zone">Zone</label>
+      <select id="zone">
+        <option>North Lot</option>
+        <option>Downtown</option>
+        <option>Campus West</option>
+        <option>Airport</option>
+      </select>
+      <p>Airport is not an allowed zone. Pick it to see a denial.</p>
+
+      <label for="permit-type">Permit type</label>
+      <select id="permit-type">
+        <option value="resident">Resident — fee $30</option>
+        <option value="visitor">Visitor — fee $10</option>
+        <option value="employee">Employee — fee $0 (free)</option>
+      </select>
+
+      <p><button type="submit">Submit application</button></p>
+    </fieldset>
+  </form>
+
+  <section class="panel" id="result-panel" hidden>
+    <h2>Result — latest application</h2>
+    <table>
+      <tbody>
+        <tr><th scope="row">Application</th><td id="r-id"></td></tr>
+        <tr><th scope="row">Status</th><td id="r-status"></td></tr>
+        <tr><th scope="row">Fee</th><td id="r-fee"></td></tr>
+        <tr><th scope="row">Payment ID</th><td id="r-payment"></td></tr>
+      </tbody>
+    </table>
+    <p class="path" id="r-steps"></p>
+    <h3>Step 5 — Timeline (what the person sees)</h3>
+    <ol class="timeline" id="r-timeline"></ol>
+  </section>
+
+  <section class="panel">
+    <h2>All applications in this office</h2>
+    <p><strong id="ledger-count">Payments in the ledger: 0</strong></p>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Driver</th><th>Status</th><th>Fee</th><th>Payment ID</th></tr>
+      </thead>
+      <tbody id="apps-body">
+        <tr><td colspan="5">No applications yet.</td></tr>
+      </tbody>
+    </table>
+    <p>Try this: submit the same plate and zone twice.
+       The second one is denied — one active permit per car per zone.</p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Skeleton Crew — Kiroween 2026. DEMO rules — not a real city's fees.
+       No real payment is taken.</p>
+  </div>
+</footer>
+
+<script src="js/rules.js"></script>
+<script src="js/app2.js"></script>
+</body>
+</html>

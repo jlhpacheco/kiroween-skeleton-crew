@@ -8,6 +8,12 @@ Built for **Kiroween 2026 (Devpost), Skeleton Crew category** — a clean-room r
 
 Pure Python, standard library only. No installs, no network, no database.
 
+## Live demo (GitHub Pages)
+
+**Try both apps in the browser: https://jlhpacheco.github.io/kiroween-skeleton-crew/**
+
+The Pages site (in `docs/`) is a faithful JavaScript port of the two Python apps below — same rules, same steps, same money math — so judges can click through App 1 (unemployment claims) and App 2 (parking permits) without installing anything. The Python code in this repo stays the source of truth.
+
 ## The two apps, side by side
 
 | Step | Skeleton | App 1 — Unemployment claims | App 2 — Parking permits |
@@ -58,7 +64,7 @@ Skeleton 10 · App 1 rules/flow 25 + shared-engine proof 6 · App 2 permits 13 +
 | `app1_unemployment/` | App 1: `wba.py` (§ 1280 table), `base_period.py`, `claim_flow.py` (a `Claim` = one skeleton `Case` + claim rules), `demo.py`, `tests/` |
 | `app2_parking/` | App 2: `parking.py` (rules in one `RULES` dict, cases run on the shared engine), `demo.py`, `tests/`, README |
 | `.kiro/` | Kiro files at the repo root: `specs/`, `hooks/`, `steering/` — the real build instructions for this project |
-| `docs/` | Submission drafts (Devpost page draft, setup notes, credits-request sheet) and per-track build results |
+| `docs/` | The GitHub Pages live-demo site (`index.html`, `app1.html`, `app2.html`, `css/`, `js/`), plus submission drafts (Devpost page draft, setup notes, credits-request sheet) and per-track build results |
 
 ## How Kiro was used
 
@@ -74,4 +80,4 @@ Honest status key: **USED** = done in this project · **DOC** = real files writt
 
 ## Status
 
-Local build, assembled Oct 30, 2026 — new project, built inside the Kiroween submission window. Not yet hosted, not yet submitted. Sample people and cars are fictional. Deadline: Friday, December 4, 2026, 2:00 PM PT.
+Local build, assembled Oct 30, 2026 — new project, built inside the Kiroween submission window. Hosted on GitHub Pages (see Live demo above); not yet submitted to Devpost. Sample people and cars are fictional. Deadline: Friday, December 4, 2026, 2:00 PM PT.
