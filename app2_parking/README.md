@@ -15,7 +15,7 @@ Only the form, the rules, and the labels change.
 |---|---|---|---|
 | 1. Form in | A person fills in a form | Claim form: who you are, where you worked, what you earned | Permit application: driver, car plate, address, permit type |
 | 2. Rules check | Clear rules say yes or no | Public benefit rules (wage table, base period, waiting week) | Car / address allowed? Plate fits, zone is allowed, no duplicate |
-| 3. Steps move | The case moves step by step | Filed → checked → decided | Applied → Checked → Approved (or Denied, with a plain reason) |
+| 3. Steps move | The case moves step by step | Filed → Waiting week → Certified (every 2 weeks) → Paid | Applied → Checked → Approved (or Denied, with a plain reason) |
 | 4. Money moves | Money moves once, the right amount | Benefit amount is set and paid | Driver pays the fee once; exempt ($0) issues free, no payment |
 | 5. Timeline | The person sees a clear timeline | Claim status and next steps in plain words | Permit status in plain words |
 
