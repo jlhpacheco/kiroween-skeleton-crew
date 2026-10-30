@@ -18,7 +18,7 @@ Pure Python, standard library only. No installs, no network, no database.
 | 4. Money moves | Money moves once, the right amount | One payment per certified week; max 26 weeks / $11,700 | Driver pays the fee once; exempt ($0) issues free, no payment |
 | 5. Timeline | The person sees a clear timeline | Claim status and next steps in plain words | Permit status in plain words |
 
-App 1's rules are real public rules (see `.kiro/specs/app1-rules-check.spec.md`). App 2's rules are **demo rules**, invented for this build and labeled DEMO in the code — not a real city's law. Both apps implement the same five steps; App 2 is the override layer only: new form, new rules, new labels.
+App 1's rules are real public rules (see `.kiro/specs/app1-rules-check.spec.md`). App 2's rules are **demo rules**, invented for this build and labeled DEMO in the code — not a real city's law. Both apps **run on the one skeleton engine** (`skeleton/skeleton.py`, class `Case`): each app is an override layer only — new form fields, new rules callable, new step labels, new timeline words. The intake, the rules contract, the step machine, the pay-once ledger, and the timeline machinery are the skeleton's, shared — and each app carries proof tests (`tests/test_shared_skeleton.py`) that fail if that ever stops being true.
 
 ## Setup and run
 
@@ -40,7 +40,7 @@ python3 app1_unemployment/demo.py
 python3 app2_parking/demo.py
 ```
 
-## Tests (48 total)
+## Tests (58 total)
 
 ```bash
 cd skeleton && python3 -m unittest test_skeleton -v && cd ..
@@ -48,15 +48,15 @@ cd app1_unemployment && python3 -m unittest discover -s tests -v && cd ..
 cd app2_parking && python3 -m unittest discover -s tests -v && cd ..
 ```
 
-Skeleton 10 · App 1 rules/flow 25 · App 2 permits 13.
+Skeleton 10 · App 1 rules/flow 25 + shared-engine proof 6 · App 2 permits 13 + shared-engine proof 4.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
-| `skeleton/` | The template: `skeleton.py` (Intake, RulesCheck, StepMachine, MoneyMove, Timeline) + its tests and README |
-| `app1_unemployment/` | App 1: `wba.py` (§ 1280 table), `base_period.py`, `claim_flow.py`, `demo.py`, `tests/` |
-| `app2_parking/` | App 2: `parking.py` (rules in one `RULES` dict), `demo.py`, `tests/`, README |
+| `skeleton/` | The template: `skeleton.py` — the `Case` engine over Intake, RulesCheck, StepMachine, MoneyMove, Timeline + its tests and README |
+| `app1_unemployment/` | App 1: `wba.py` (§ 1280 table), `base_period.py`, `claim_flow.py` (a `Claim` = one skeleton `Case` + claim rules), `demo.py`, `tests/` |
+| `app2_parking/` | App 2: `parking.py` (rules in one `RULES` dict, cases run on the shared engine), `demo.py`, `tests/`, README |
 | `.kiro/` | Kiro files at the repo root: `specs/`, `hooks/`, `steering/` — the real build instructions for this project |
 | `docs/` | Submission drafts (Devpost page draft, setup notes, credits-request sheet) and per-track build results |
 

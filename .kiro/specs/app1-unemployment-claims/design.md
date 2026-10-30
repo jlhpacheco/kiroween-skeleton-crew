@@ -32,16 +32,17 @@ The 5 bones and where App 1 follows them:
 
 | Bone | Skeleton (Track A) | App 1 (Track B) — the truth |
 |---|---|---|
-| 1. Form in | `Intake.submit()` → `Record` with ID | **Not imported.** `demo.py` builds values directly; `Claim` is created with claimant name + WBA. Intake integration is tasks.md B-7. |
-| 2. Rules check | One `RulesCheck` callable → `RulesResult` | Same idea, app-specific functions: `monetarily_qualifies()` + `weekly_benefit_amount()` in `wba.py` only. |
-| 3. Steps move | `StepMachine`, forward-only, logged | `Claim.state`: `Filed → WaitingWeek → Certified → Paid`; waiting-week and order guards raise `ClaimError`. No separate StepMachine instance is used. |
-| 4. Money moves | `MoneyMove.pay()`, key `record:period`, `DoublePayBlocked` | Same pattern re-implemented in `claim_flow.py`: `payments` dict keyed by week; a repeat week raises its own `DoublePayBlocked`. |
-| 5. Timeline | `Timeline` class, plain words | `Claim.timeline: list[str]`, appended at every step; `render_timeline()` numbers the lines. |
+| 1. Form in | `Intake.submit()` → `Record` with ID | **Imported and used.** `Claim` builds a skeleton `Case` with the form `{claimant, wba}`; the engine's Intake assigns the record ID. |
+| 2. Rules check | One `RulesCheck` callable → `RulesResult` | `claim_rules()` in `claim_flow.py` is the callable the engine runs; it carries the verdict of the app-specific rule functions `monetarily_qualifies()` + `weekly_benefit_amount()` in `wba.py` only. |
+| 3. Steps move | `StepMachine`, forward-only, logged | The engine's StepMachine, steps `Filed → WaitingWeek → Certified → Paid`; `Claim.state` reads the machine; waiting-week and order guards raise `ClaimError`. |
+| 4. Money moves | `MoneyMove.pay()`, key `record:period`, `DoublePayBlocked` | The engine's ledger: every paid week pays through `Case.pay(period="week-N")`; `claim_flow.DoublePayBlocked` IS the skeleton's class (imported, not redefined). The app `payments` dict is the per-week view on top. |
+| 5. Timeline | `Timeline` class, plain words | The engine's `Timeline`; `Claim.timeline` reads its entries as plain strings; `render_timeline()` numbers the lines. |
 
-Design rule that follows from this table: App 1 proves the skeleton's
-*pattern*. It does not yet literally run on `skeleton.py`. Any repo
-text must say "same pattern," never "built on the skeleton code,"
-until tasks.md B-7 is done.
+Design rule that follows from this table: since the Oct 30 refactor
+(tasks.md B-7, DONE), App 1 literally runs on `skeleton.py` — repo
+text may say "built on the skeleton code," and
+`app1_unemployment/tests/test_shared_skeleton.py` is the proof that
+must keep passing for that sentence to stay.
 
 ## Components
 

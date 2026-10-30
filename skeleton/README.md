@@ -21,6 +21,15 @@ Pure Python, standard library only. No pip installs, no network, no database.
 
 Glue: `run_case(form, rules_check, steps, period)` runs all 5 in order.
 
+**The engine: `Case`.** A `Case(form, rules_check, intake=…, ledger=…)`
+runs steps 1–2 at construction (Intake + the rules contract), then
+the app drives steps 3–5 through it: `start_steps(labels)`,
+`advance()`, `pay(period, amount_cents)`, `say(text)` / `say_next(text)`.
+Both apps in this repo run on `Case` — App 1's `Claim` and App 2's
+`PermitOffice` hold a real `Case` each, and each app's
+`tests/test_shared_skeleton.py` proves it (engine pay-spy, class
+identity, double-pay blocked by the engine itself).
+
 ## Run it
 
 ```bash

@@ -57,7 +57,7 @@ The same five steps run two different apps. That is the Skeleton Crew proof.
 | **Steps move** | Filed → Waiting week → Certified (every 2 weeks) → Paid | Applied → Checked → Approved (or Denied with reason) |
 | **Money moves** | Payment for each certified week; max 26 weeks; one unpaid waiting week first | Driver pays the permit fee once, before issue |
 | **Timeline** | Claim timeline: what happened, what happens next | Permit timeline: applied / checked / approved / issued |
-| **Skeleton code** | The 5-step skeleton lives in `skeleton/skeleton.py`; App 1 implements the same 5 steps in `wba.py` / `base_period.py` / `claim_flow.py` | Same 5 steps, override layer only in `app2_parking/parking.py`: new form, new rules, new labels |
+| **Skeleton code** | The 5-step skeleton engine lives in `skeleton/skeleton.py` (class `Case`); App 1 runs on it — `claim_flow.py` supplies the claim form + `claim_rules`, with benefit math in `wba.py` / `base_period.py` | Same engine, override layer only in `app2_parking/parking.py`: new form, new rules, new labels — proof tests in both apps keep this honest |
 
 **App 2 decision:** Settled by Jose Luis on October 30, 2026 — Parking Permits. The calculator + simulator pair as App 2 is **closed** and will not be built.
 

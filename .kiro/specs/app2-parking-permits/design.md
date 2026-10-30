@@ -71,19 +71,24 @@ They are NOT a real city's law, fee schedule, or ordinance."
   step after `Approved`. A result's `steps` list is the path taken,
   e.g. `["Applied", "Checked", "Denied"]`.
 
-## Skeleton mapping (pattern reuse, not code reuse)
+## Skeleton mapping (code reuse — parking runs on the engine)
 
-| Bone | How parking.py does it |
+Since the Oct 30 refactor (tasks.md C-8, DONE), `parking.py` imports
+`skeleton/skeleton.py` and runs every application as a skeleton
+`Case` on the office's one shared `MoneyMove` ledger:
+
+| Bone | How parking.py does it now |
 |---|---|
-| 1. Form in | `PermitApplication` + `PermitOffice.submit()` assigns the ID |
-| 2. Rules check | `check_rules()` reading the single `RULES` dict |
-| 3. Steps move | `steps` list on the result: Applied → Checked → Approved/Denied |
-| 4. Money moves | `pay()` — idempotent, one ledger entry per application |
-| 5. Timeline | `timeline` list on the result; `status_timeline()` returns it |
+| 1. Form in | `PermitApplication` fields become the `Case` form dict; the engine's Intake makes the record (the office keeps its public `APP-NNN` numbers) |
+| 2. Rules check | `check_rules()` reading the single `RULES` dict, wrapped as the engine's one `RulesCheck` callable → `RulesResult` |
+| 3. Steps move | The engine's `StepMachine` via the `Case`; the result's `steps` list IS `case.step_labels()`: Applied → Checked → Approved/Denied |
+| 4. Money moves | `pay()` — idempotent app view over `Case.pay(period="permit-fee")`; the shared engine ledger blocks any second pay |
+| 5. Timeline | The engine's `Timeline`; the result's `timeline` reads its entries; `status_timeline()` returns it |
 
-`parking.py` does not import `skeleton.py`. The module docstring says
-it "reuses the skeleton IDEA only." Design and submission text keep
-that wording.
+The module docstring now says parking RUNS ON the shared engine.
+Proof: `app2_parking/tests/test_shared_skeleton.py` (4 tests —
+shared ledger, engine double-pay block, pay-spy counts exactly one
+engine pay across the three demo-style cases).
 
 ## Demo (`demo.py`) — the three proven cases
 

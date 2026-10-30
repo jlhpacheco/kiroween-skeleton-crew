@@ -34,11 +34,14 @@ and test-proven in Track B; `[ ]` = not built.
   the alternate period's wages before saying no. Today `demo.py`
   only prints both periods; `claim_flow.py` never selects between
   them. (Req. 3 — the honest gap)
-- [ ] B-7. Run App 1 literally on Track A's `skeleton.py`
-  (`Intake` / `RulesCheck` / `StepMachine` / `MoneyMove` / `Timeline`)
-  instead of re-implementing the same pattern inside `claim_flow.py`,
-  OR change all project text to say "same pattern" permanently.
-  One of the two must happen before any public claim about reuse.
+- [x] B-7. DONE (refactor, Oct 30, 2026): App 1 runs literally on
+  Track A's `skeleton.py`. `Claim` builds one skeleton `Case`
+  (engine Intake / `claim_rules` / StepMachine / MoneyMove /
+  Timeline) and pays every week through `Case.pay`;
+  `claim_flow.DoublePayBlocked` is the skeleton's class. Proof:
+  `tests/test_shared_skeleton.py` (6 tests — engine parts, pay-spy,
+  class identity). All 25 Track B tests pass unchanged; demo total
+  still $450.00. Project text now says "built on the skeleton code."
 - [ ] B-8. Biweekly certification grouping: today the model certifies
   and pays one week at a time. Group weeks into the real two-week
   certification the design pack describes, keeping one payment per

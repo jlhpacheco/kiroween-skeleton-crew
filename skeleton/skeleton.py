@@ -265,6 +265,96 @@ class Timeline:
 
 
 # ---------------------------------------------------------------------------
+# The engine — one case, run on the shared skeleton
+# ---------------------------------------------------------------------------
+
+class Case:
+    """
+    One case moving through the 5 steps on THIS skeleton — the single
+    engine every app in this repo runs on.
+
+    An app supplies ONLY:
+      - a form (plain dict),
+      - a rules callable (Record -> RulesResult),
+      - step labels (chosen with start_steps, once the rules result
+        is known if the path depends on it),
+      - money direction/labels via pay(period, amount_cents).
+
+    The engine owns: the record's ID and saved copy (Intake), the
+    rules contract check (run_rules), ordered logged steps
+    (StepMachine), pay-once-per-period money (MoneyMove), and the
+    plain-words timeline (Timeline).
+
+    Steps 1 (form in) and 2 (rules check) run at construction.
+    Steps 3-5 happen through start_steps/advance, pay, say/say_next.
+    """
+
+    def __init__(
+        self,
+        form: Dict[str, Any],
+        rules_check: RulesCheck,
+        *,
+        intake: Optional[Intake] = None,
+        ledger: Optional[MoneyMove] = None,
+    ):
+        self._intake = intake or Intake()
+        self._ledger = ledger if ledger is not None else MoneyMove()
+        self.timeline = Timeline()
+        self.record = self._intake.submit(form)
+        self.rules = run_rules(rules_check, self.record)
+        self._machine: Optional[StepMachine] = None
+
+    # -- Step 3: steps move -------------------------------------------------
+    @property
+    def ledger(self) -> MoneyMove:
+        return self._ledger
+
+    @property
+    def machine(self) -> StepMachine:
+        if self._machine is None:
+            raise RuntimeError("steps not started — call start_steps() first")
+        return self._machine
+
+    def start_steps(self, steps: List[str]) -> StepMachine:
+        if self._machine is not None:
+            raise RuntimeError("steps already started for this case")
+        self._machine = StepMachine(steps)
+        return self._machine
+
+    def advance(self, note: str = "") -> str:
+        return self.machine.advance(note)
+
+    @property
+    def current_step(self) -> str:
+        return self.machine.current
+
+    def step_labels(self) -> List[str]:
+        """Every step this case has been on, in order (history is the log)."""
+        return [e.to_step for e in self.machine.history]
+
+    # -- Step 4: money moves --------------------------------------------------
+    def pay(self, period: str, amount_cents: int) -> Payment:
+        """Pay this case's record for one period, through the shared ledger."""
+        return self._ledger.pay(self.record.id, period, amount_cents)
+
+    def has_paid(self, period: str) -> bool:
+        return self._ledger.has_paid(self.record.id, period)
+
+    def payments(self) -> List[Payment]:
+        return self._ledger.payments_for(self.record.id)
+
+    def total_paid_cents(self) -> int:
+        return self._ledger.total_paid_cents(self.record.id)
+
+    # -- Step 5: timeline -----------------------------------------------------
+    def say(self, text: str) -> None:
+        self.timeline.add(text)
+
+    def say_next(self, text: str) -> None:
+        self.timeline.add_next(text)
+
+
+# ---------------------------------------------------------------------------
 # Glue — run one record through all five steps
 # ---------------------------------------------------------------------------
 
@@ -287,19 +377,17 @@ def run_case(
     ledger: Optional[MoneyMove] = None,
 ) -> CaseResult:
     """
-    The whole skeleton in one function:
+    The whole skeleton in one function, built on the Case engine:
     1 form in, 2 rules check, 3 steps move, 4 money moves (if qualifies),
     5 timeline built in plain language.
     """
-    intake = intake or Intake()
-    ledger = ledger or MoneyMove()
-    timeline = Timeline()
-
-    record = intake.submit(form)
+    case = Case(form, rules_check, intake=intake, ledger=ledger)
+    timeline = case.timeline
+    record = case.record
     timeline.add(f"You submitted your form. Your reference is {record.id}.")
 
-    result = run_rules(rules_check, record)
-    machine = StepMachine(steps)
+    result = case.rules
+    machine = case.start_steps(steps)
 
     payments: List[Payment] = []
     if result.qualifies:
@@ -308,12 +396,11 @@ def run_case(
             timeline.add(f"Why: {result.reason}")
         # Walk all steps except we stop before final, then complete on pay
         while not machine.is_done:
-            nxt = machine.next_step()
             machine.advance()
             if machine.is_done:
                 break
             timeline.add(f"Step done: {machine.current}.")
-        payment = ledger.pay(record.id, period=period, amount_cents=result.amount_cents)
+        payment = case.pay(period=period, amount_cents=result.amount_cents)
         payments.append(payment)
         timeline.add(f"Payment sent for {period}: ${payment.amount_cents / 100:.2f}.")
         timeline.add_next("Certify again next period to keep payments going.")

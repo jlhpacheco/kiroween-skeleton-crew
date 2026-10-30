@@ -109,10 +109,14 @@ Acceptance criteria:
 ### Requirement 6 — Skeleton reuse, honestly stated
 
 1. App 2 SHALL follow the skeleton's 5 steps and step names' meaning.
-2. Project text SHALL say App 2 reuses the skeleton **idea / pattern**.
-   It does NOT import `skeleton.py` — `parking.py` is a standalone
-   override layer (`PermitOffice` holds its own steps, ledger, and
-   timeline lists). Claiming code reuse would be false. See tasks.md.
+2. Project text SHALL say App 2 **runs on the skeleton code**:
+   since the Oct 30, 2026 refactor (tasks.md C-8), `parking.py`
+   imports `skeleton.py` and every application is a skeleton `Case`
+   on the office's shared engine ledger (`PermitOffice` keeps only
+   the app-level views: results, payments by application ID, active
+   permits). The claim is backed by
+   `tests/test_shared_skeleton.py`; if those tests fail, this
+   requirement's wording must change back. See tasks.md.
 
 ### Requirement 7 — Build constraints
 

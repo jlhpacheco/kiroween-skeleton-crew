@@ -5,9 +5,11 @@
 Only the form, the rules, and the labels change.
 
 > **New build note:** This is a NEW Kiroween build, made inside the
-> Oct 30, 2026 submission window. It reuses the skeleton *idea* only.
-> No code is copied from any prior parking app — Duvara and Solvia
-> were not copied, read, or modified for this build.
+> Oct 30, 2026 submission window. It runs on the shared skeleton
+> engine (`skeleton/skeleton.py`) and supplies only the form, the
+> rules, and the labels. No code is copied from any prior parking
+> app — Duvara and Solvia were not copied, read, or modified for
+> this build.
 
 ## The skeleton, side by side
 

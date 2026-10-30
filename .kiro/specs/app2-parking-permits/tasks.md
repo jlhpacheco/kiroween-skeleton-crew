@@ -28,10 +28,12 @@ Corresponds to: `specs/app2-parking-permits/requirements.md` and
 
 ## Not built — next tasks, in order
 
-- [ ] C-8. Decide the reuse question, same as App 1's B-7: either run
-  parking on `skeleton.py`'s actual classes, or keep the permanent
-  wording "reuses the skeleton idea only." Never claim code reuse
-  while `parking.py` imports nothing from the skeleton.
+- [x] C-8. DONE (refactor, Oct 30, 2026): the reuse question is
+  decided — parking runs on `skeleton.py`'s actual classes. Every
+  application is a skeleton `Case` on the office's shared engine
+  ledger; code reuse is now a fact, proven by
+  `tests/test_shared_skeleton.py` (4 tests). The old "idea only"
+  wording is removed everywhere it appeared.
 - [ ] C-9. Pause-and-ask for incomplete applications: today a missing
   driver name or address is a **denial with a reason**, not a pause
   that asks and resumes. If the product wants the hook behaviour in

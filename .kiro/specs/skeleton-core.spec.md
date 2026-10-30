@@ -13,11 +13,28 @@ One lean template that runs every app in this repo.
 
 Glue: `run_case(form, rules_check, steps, period)` runs all 5 steps in order.
 
+## The engine — `Case`
+`Case(form, rules_check, *, intake=None, ledger=None)` is the single
+engine both apps run on. Construction runs steps 1–2 (Intake, then
+the rules callable through `run_rules`). The app then drives:
+`start_steps(labels)` (once; choose the path after the rules result
+if it branches), `advance()`, `pay(period, amount_cents)`,
+`has_paid(period)`, `payments()`, `total_paid_cents()`,
+`say(text)` / `say_next(text)`, `step_labels()`. `run_case` itself
+is implemented on top of `Case`.
+
 ## Building a new app on this skeleton (override layer only)
 1. New form fields (a different dict).
 2. New rules (a different `RulesCheck` function).
 3. New step labels and timeline words.
 4. Do NOT change `Intake`, `StepMachine`, `MoneyMove`, or `Timeline`.
+
+Both shipped apps are built exactly this way (refactor, Oct 30):
+App 1's `Claim` holds a `Case` with steps Filed → WaitingWeek →
+Certified → Paid and pays each week through `Case.pay`; App 2's
+`PermitOffice` runs every application as a `Case` on one shared
+ledger. Each app's `tests/test_shared_skeleton.py` proves the
+sharing (isinstance, pay-spy, engine-level double-pay block).
 
 ## Acceptance
 - `skeleton/test_skeleton.py` passes (10 tests).

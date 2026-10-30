@@ -1,5 +1,12 @@
 # Track C — App 2 (Parking Permits) — Result
 
+> SUPERSEDED IN PART (Oct 30, 2026 refactor): this record describes
+> the first build, where parking reused the skeleton *idea* only.
+> Parking now imports `skeleton.py` and runs on the shared `Case`
+> engine — see REFACTOR-SUMMARY.md in the build folder and
+> `app2_parking/tests/test_shared_skeleton.py`. The build facts
+> below (rules, cases, tests at the time) are unchanged history.
+
 - **Hypothesis:** The same 5-step skeleton that runs App 1 (unemployment
   claims) can run a completely different world — parking permits — with
   only a new form, new rules, and new labels. No skeleton change needed.

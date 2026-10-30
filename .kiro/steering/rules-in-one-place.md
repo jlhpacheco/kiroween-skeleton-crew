@@ -24,12 +24,12 @@ every time.
 - Documents quote the rules; they do not become a second source.
   If a document and the code disagree, the code's one home wins and
   the document gets fixed.
-- Known honest exception, flagged not hidden: App 1 and App 2 each
-  re-implement the skeleton's *patterns* (pay-once, timeline) inside
-  their own files instead of importing `skeleton.py`. That is
-  pattern reuse, not rule duplication — the domain rules above each
-  still live in one home — but the duplication of the *machinery*
-  is a real wart. It is tracked as tasks.md B-7 / C-8.
+- Machinery lives in one home too: since the Oct 30, 2026 refactor
+  (tasks.md B-7 / C-8, both DONE), App 1 and App 2 import
+  `skeleton.py` and run on its `Case` engine — neither app
+  re-implements pay-once, steps, intake, or timeline machinery.
+  Never re-introduce a private copy of that machinery inside an app;
+  each app's `tests/test_shared_skeleton.py` exists to catch it.
 - Deterministic only: no randomness, no clock-dependent amounts, no
   network lookups in a rules check. The same record checked twice
   gives the same result twice.
